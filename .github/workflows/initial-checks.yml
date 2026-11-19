@@ -1,0 +1,29 @@
+name: Initial Project Checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  project-check:
+    name: Check Project Structure
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check README
+        run: |
+          test -f README.md
+          test -s README.md
+
+      - name: Check documentation directory
+        run: |
+          test -d documentation
+          find documentation -name "*.md" -print -quit | grep -q .
+
+      - name: Project structure check passed
+        run: echo "All initial project checks passed!"
